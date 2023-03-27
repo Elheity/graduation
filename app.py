@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd 
 from matplotlib import pyplot as plt
-from plotly import graph_objs as go
+#from plotly import graph_objs as go
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.model_selection import cross_val_score, train_test_split
@@ -36,7 +36,7 @@ if nav == "Home":
     if st.checkbox("Show Table"):
         st.table(training.head(20))
     
-    graph = st.selectbox("What kind of Graph ? ",["PH","Protein Sequence"])
+    graph = st.selectbox("What kind of Graph ? ",["PH"])
 
     val = st.slider("Filter data using years",7)
     data = train_data.loc[train_data["pH"]<= val]
@@ -48,13 +48,7 @@ if nav == "Home":
         plt.ylabel("tm")
         plt.tight_layout()
         st.pyplot()
-    if graph == "Protein Sequence":
-        layout =go.Layout(
-            xaxis = dict(range=[0,16]),
-            yaxis = dict(range =[0,210000])
-        )
-        fig = go.Figure(train_data=go.Scatter(x=train_data["protein_sequence"], y=train_data["tm"], mode='markers'),layout = layout)
-        st.plotly_chart(fig)
+    
     
 if nav == "Prediction":
     st.header("Measure the enzyme stability")
